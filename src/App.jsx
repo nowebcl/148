@@ -188,9 +188,7 @@ Vi esto en su cotizador web y me interesa comenzar pronto.`;
             <ChevronLeft size={16} /> Volver
           </button>
         ) : (
-          <div className="flex flex-col">
-            <span className="text-lg font-black tracking-tighter italic leading-none">148 <span className="text-brand">PRO</span></span>
-          </div>
+            <img src="/assets/logo.png" alt="148 Pro Logo" className="h-6 w-auto object-contain" />
         )}
         <div className="flex flex-col items-end">
           <span className="text-[9px] font-black uppercase tracking-[0.2em] text-brand">Paso {step}/{totalSteps}</span>
