@@ -290,8 +290,13 @@ Vi esto en su cotizador web y me interesa comenzar pronto.`;
                   className="w-full h-40 glass p-4 text-white focus:outline-none focus:ring-1 focus:ring-brand/50 resize-none placeholder:text-gray-700 text-sm"
                   placeholder="Ej: Necesito cobertura para un evento en el sur y un video promocional con drone..."
                 />
+                {formData.details.length > 0 && formData.details.length < 15 && (
+                  <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="text-[10px] text-brand/70 font-black uppercase tracking-widest text-center">
+                    Mínimo 15 caracteres para continuar
+                  </motion.p>
+                )}
                 <motion.button 
-                  disabled={formData.details.length < 10}
+                  disabled={formData.details.length < 15}
                   onClick={nextStep} 
                   className="w-full bg-brand text-black py-4 rounded-xl font-black flex items-center justify-center gap-2 shadow-lg text-sm"
                 >
