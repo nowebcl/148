@@ -72,68 +72,10 @@ const StepWrapper = ({ children, title, subtitle }) => (
   </motion.div>
 );
 
-const Roulette = ({ onReveal }) => {
-  const [isSpinning, setIsSpinning] = useState(false);
-  const [hasSpun, setHasSpun] = useState(false);
-  const [rotation, setRotation] = useState(0);
 
-  const spin = () => {
-    if (isSpinning || hasSpun) return;
-    setIsSpinning(true);
-    const newRotation = rotation + (360 * 5) + 180;
-    setRotation(newRotation);
-
-    setTimeout(() => {
-      setIsSpinning(false);
-      setHasSpun(true);
-      onReveal();
-    }, 3000);
-  };
-
-  return (
-    <div className="relative w-full flex flex-col items-center py-2 space-y-3">
-      <div className="relative w-36 h-36">
-        <div className="absolute -top-1 left-1/2 -translate-x-1/2 z-40 w-0 h-0 border-l-[8px] border-l-transparent border-r-[8px] border-r-transparent border-t-[16px] border-t-brand" />
-        <motion.div
-          animate={{ rotate: rotation }}
-          transition={{ duration: 3, ease: [0.2, 0, 0, 1] }}
-          className="w-full h-full rounded-full border-2 border-white/10 relative overflow-hidden bg-white/5"
-        >
-          {[0, 60, 120, 180, 240, 300].map((angle) => (
-            <div key={angle} className="absolute top-0 left-1/2 w-px h-1/2 bg-white/10 origin-bottom" style={{ transform: `rotate(${angle}deg)` }} />
-          ))}
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-full h-full relative opacity-40">
-               <div className="absolute top-[10%] left-1/2 -translate-x-1/2 text-[8px] font-black">20%</div>
-               <div className="absolute bottom-[10%] left-1/2 -translate-x-1/2 text-[10px] font-black text-brand italic scale-150">10% OFF</div>
-               <div className="absolute top-1/2 left-[10%] -translate-y-1/2 rotate-[90deg] text-[8px] font-black">5%</div>
-               <div className="absolute top-1/2 right-[10%] -translate-y-1/2 rotate-[-90deg] text-[8px] font-black">15%</div>
-            </div>
-          </div>
-          <div className="absolute inset-[35%] rounded-full bg-black border border-brand/30 flex items-center justify-center z-30 shadow-inner">
-            <div className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-          </div>
-        </motion.div>
-      </div>
-
-      <motion.button
-        whileTap={{ scale: 0.95 }}
-        onClick={spin}
-        disabled={isSpinning || hasSpun}
-        className={cn(
-          "px-6 py-2 rounded-full font-black text-[10px] uppercase tracking-widest transition-all shadow-lg",
-          hasSpun ? "bg-brand/10 text-brand border border-brand/20" : "bg-brand text-black"
-        )}
-      >
-        {isSpinning ? "Girando..." : hasSpun ? "Premio Aplicado" : "Girar Ruleta 🎰"}
-      </motion.button>
-    </div>
-  );
-};
 
 export default function App() {
   const [step, setStep] = useState(1);
-  const [discountRevealed, setDiscountRevealed] = useState(false);
   const [formData, setFormData] = useState({
     services: [],
     details: '',
@@ -159,9 +101,7 @@ export default function App() {
     return acc + (s ? s.price : 0);
   }, 0);
 
-  // Discount Calculation: 10% OFF
-  const discountAmount = Math.round(rawPrice * 0.10);
-  const totalPrice = discountRevealed ? rawPrice - discountAmount : rawPrice;
+  const totalPrice = rawPrice;
 
   const formatPrice = (p) => new Intl.NumberFormat('es-CL', { style: 'currency', currency: 'CLP', maximumFractionDigits: 0 }).format(p);
 
@@ -169,7 +109,7 @@ export default function App() {
     const phone = "56992449580";
     const servicesText = formData.services.join(", ");
     const text = `¡Hola 148 Producciones! 👋 Quiero cotizar los siguientes servicios: ${servicesText}.
-💰 Inversión estimada: ${formatPrice(totalPrice)}${discountRevealed ? ` (Incluye 10% OFF web: -${formatPrice(discountAmount)})` : ''}
+💰 Inversión estimada: ${formatPrice(totalPrice)}
 📌 Proyecto: ${formData.details}
 👤 Nombre: ${formData.name}
 🏢 Empresa: ${formData.company || 'Particular'}
@@ -370,14 +310,9 @@ Vi esto en su cotizador web y me interesa comenzar pronto.`;
                   <div className="space-y-0.5 relative z-10">
                     <span className="text-brand text-[8px] font-black uppercase tracking-widest">Inversión Estimada</span>
                     <div className="flex items-baseline gap-1.5">
-                      <p className={cn("font-black text-white transition-all", discountRevealed ? "text-xs line-through opacity-40" : "text-xl")}>
-                        {formatPrice(rawPrice)}
+                      <p className="text-xl font-black text-white">
+                        {formatPrice(totalPrice)}
                       </p>
-                      {discountRevealed && (
-                        <motion.p initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="text-2xl font-black text-brand italic">
-                          {formatPrice(totalPrice)}
-                        </motion.p>
-                      )}
                     </div>
                   </div>
                   <div className="flex justify-between pt-2 border-t border-white/5 relative z-10">
@@ -392,7 +327,7 @@ Vi esto en su cotizador web y me interesa comenzar pronto.`;
                   </div>
                 </div>
 
-                <Roulette onReveal={() => setDiscountRevealed(true)} />
+
 
                 <div className="flex flex-col gap-2 pt-1">
                   <motion.button 
