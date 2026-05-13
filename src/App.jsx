@@ -15,7 +15,12 @@ import {
   ChevronLeft,
   Send,
   CheckCircle2,
-  Phone
+  Phone,
+  Laptop,
+  Coffee,
+  Wine,
+  Waves,
+  Users
 } from 'lucide-react';
 import { clsx } from 'clsx';
 import { twMerge } from 'tailwind-merge';
@@ -25,16 +30,20 @@ function cn(...inputs) {
 }
 
 const SERVICES = [
-  { id: 'corp', name: 'Video Corporativo', icon: Building2, desc: 'Empresas, drones, entrevistas', price: 450000, tag: 'Más Solicitado' },
-  { id: 'clip', name: 'Video Clip / Spot', icon: Music, desc: 'Música, cápsulas web', price: 350000 },
-  { id: 'events', name: 'Eventos / Matrimonios', icon: Camera, desc: 'Foto + Video', price: 600000, tag: 'Premium' },
-  { id: 'aerial', name: 'Tomas Aéreas', icon: Wind, desc: 'Drone DJI Phantom 4', price: 150000 },
-  { id: 'timelapse', name: 'Timelapse', icon: Timer, desc: 'Seguimiento de obras', price: 250000 },
-  { id: 'photo', name: 'Fotografía Profesional', icon: ImageIcon, desc: 'Banco de fotos', price: 120000 },
-  { id: 'book', name: 'Book Fotográfico', icon: UserCircle, desc: 'Estudio o exterior', price: 180000 },
-  { id: 'studio', name: 'Arriendo de Estudio', icon: Home, desc: 'Las Condes', price: 80000 },
-  { id: 'post', name: 'Edición / Postpro', icon: Film, desc: 'Gráfica 3D, montaje', price: 200000 },
-  { id: 'scan', name: 'Escaneo 3D', icon: Box, desc: 'Recorridos virtuales', price: 300000, tag: 'Nuevo' },
+  { id: 'corp', name: 'Video Corporativo', icon: Building2, desc: 'Empresas, drones, entrevistas', price: 450000, tag: 'Popular' },
+  { id: 'after', name: 'Aftermovie Evento', icon: Camera, desc: 'Registro cinematográfico', price: 280000 },
+  { id: 'reels', name: 'Reels / Redes Sociales', icon: Film, desc: 'Contenido dinámico', price: 90000 },
+  { id: 'drone', name: 'Servicio Drone 4K', icon: Wind, desc: 'Tomas aéreas profesionales', price: 120000 },
+  { id: 'sub', name: 'Registro Submarino', icon: Waves, desc: 'Agua y Naturaleza', price: 180000 },
+  { id: '3d', name: 'Escaneo 3D / Tour', icon: Box, desc: 'Tecnología Matterport', price: 600000 },
+  { id: 'book', name: 'Book Profesional', icon: UserCircle, desc: 'Estudio o exterior', price: 180000 },
+  { id: 'tech', name: 'Producción Técnica', icon: Music, desc: 'Audio, Iluminación, Pantallas', price: 550000, tag: 'Integral' },
+  { id: 'dj', name: 'DJ Experiencia', icon: Users, desc: 'Música y Ambientación', price: 300000 },
+  { id: 'mkt', name: 'Marketing & Branding', icon: Send, desc: 'Estrategia y Contenido', price: 250000 },
+  { id: 'web', name: 'Desarrollo Web', icon: Laptop, desc: 'Landing / Ecommerce', price: 450000 },
+  { id: 'catering', name: 'Catering Eventos', icon: Coffee, desc: 'Coffee / Cocktail / Asados', price: 300000 },
+  { id: 'bar', name: 'Barra Móvil', icon: Wine, desc: 'Coctelería de autor', price: 250000 },
+  { id: 'space', name: 'Arriendo Espacio', icon: Home, desc: 'Patagonia / Outdoor', price: 600000, tag: 'Premium' },
 ];
 
 const StepWrapper = ({ children, title, subtitle }) => (
@@ -207,11 +216,14 @@ Vi esto en su cotizador web y me interesa comenzar pronto.`;
           {step === 1 && (
             <StepWrapper 
               key="step1" 
-              title="Invierte en tu Marca" 
-              subtitle="Eleva tu nivel audiovisual"
+            title="148 Producciones" 
+            subtitle="Audiovisual • Eventos • Marketing • Experiencias"
             >
               <div className="w-full flex flex-col h-full pt-2">
-                <div className="grid grid-cols-2 gap-2 overflow-y-auto no-scrollbar max-h-[55vh] px-1 pb-2">
+                <p className="text-[10px] text-gray-400 text-center mb-6 px-4 leading-relaxed max-w-sm mx-auto">
+                  Desarrollamos experiencias audiovisuales, eventos y contenido creativo en el sur de Chile con un enfoque cinematográfico y moderno.
+                </p>
+                <div className="grid grid-cols-2 gap-2 overflow-y-auto no-scrollbar max-h-[50vh] px-1 pb-2">
                   {SERVICES.map((s, idx) => (
                     <motion.button
                       key={s.id}
@@ -276,7 +288,7 @@ Vi esto en su cotizador web y me interesa comenzar pronto.`;
                   value={formData.details}
                   onChange={(e) => setFormData({ ...formData, details: e.target.value })}
                   className="w-full h-40 glass p-4 text-white focus:outline-none focus:ring-1 focus:ring-brand/50 resize-none placeholder:text-gray-700 text-sm"
-                  placeholder="Ej: Video corporativo con drones..."
+                  placeholder="Ej: Necesito cobertura para un evento en el sur y un video promocional con drone..."
                 />
                 <motion.button 
                   disabled={formData.details.length < 10}
